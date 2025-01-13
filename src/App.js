@@ -1,8 +1,8 @@
-import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom"; // Make sure Route is imported
-import Navbar from './Components/Navbar/Navbar';
+import React from 'react';
 import './App.css';
-import Landing_Page from './Components/Landing_Page/Landing_Page'; // Correct path and PascalCase
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Navbar from './Components/Navbar/Navbar';
+import LandingPage from './Components/Landing_Page/LandingPage';
 
 function App() {
   return (
@@ -14,7 +14,7 @@ function App() {
           {/* Set up the Routes for different pages */}
           <Routes>
             {/* Define Route for the landing page */}
-            <Route path="/" element={<Landing_Page />} /> {/* Correct usage of Landing_Page component */}
+            <Route path="/" element={<LandingPage />} /> {/* Correct usage of LandingPage component */}
           </Routes>
         </BrowserRouter>
     </div>

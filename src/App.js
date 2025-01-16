@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from './Components/Navbar/Navbar';
 import LandingPage from './Components/Landing_Page/LandingPage';  // Updated import
+import Login from './Components/Login/Login'; // Import the Login component
 
 function App() {
   useEffect(() => {
@@ -15,6 +16,7 @@ function App() {
           <Navbar />
           <Routes>
             <Route path="/" element={<LandingPage />} />
+            <Route path="/login" element={<Login />} /> {/* Add a route for Login */}
           </Routes>
         </BrowserRouter>
     </div>

@@ -1,13 +1,15 @@
-import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { API_URL } from "../../config";
+import React, { useState, useEffect } from "react";  // Import useState and useEffect
+import { useNavigate, Link } from "react-router-dom"; // Import Link here along with useNavigate
 import "./Login.css";
 
-export default function Login() {
-  const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
-  const [email, setEmail] = useState("");
-  const [showerr, setShowerr] = useState("");
+// Define API_URL (replace with actual URL or import it if defined elsewhere)
+const API_URL = "http://your-api-url.com"; // Replace this with your actual API URL
+
+const Login = () => {
+  const [password, setPassword] = useState(""); // State for password
+  const [showPassword, setShowPassword] = useState(false); // State for toggling password visibility
+  const [email, setEmail] = useState(""); // State for email
+  const [showerr, setShowerr] = useState(""); // State for error messages
 
   const validateEmail = function (email) {
     const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
@@ -161,4 +163,6 @@ export default function Login() {
       </div>
     </div>
   );
-}
+};
+
+export default Login;

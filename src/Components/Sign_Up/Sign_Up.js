@@ -14,41 +14,20 @@ export default function Signup() {
 
   const navigate = useNavigate();
 
-  // Email Validation Function
   const validateEmail = function (email) {
     const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     return emailPattern.test(email);
   };
-
-  // Phone Number Validation Function
   const validatePhoneNumber = function (phone) {
-    const phoneNumberPattern = /d{10}/;
-    // Check if the phone number is exactly 10 digits
-    if (phone.length < 10) {
-      setErrorNumber("Phone Number should be exactly 10 digits.");
-      return false;
-    }
-    if (phone.length > 10) {
-      setErrorNumber("Phone Number cannot be more than 10 digits.");
-      return false;
-    }
-    // Return true if the phone number is 10 digits
+    const phoneNumberPattern = /^\d{10}$/;
     return phoneNumberPattern.test(phone);
   };
-
-  // Password Validation Function
-  const validatePassword = function (password) {
-    // Check for at least 8 characters
-    return password.length >= 8;
-  };
-
-  // Toggle Password Visibility
   const togglePasswordVisibility = function () {
     setShowPassword(!showPassword);
   };
 
-  // Registration API Call
   const register = async () => {
+    // API Call
     const response = await fetch(`${API_URL}/api/auth/register`, {
       method: "POST",
       headers: {
@@ -63,14 +42,16 @@ export default function Signup() {
     });
 
     const json = await response.json();
-    console.log(json, "response");
+    console.log(json,"response")
 
     if (json.authtoken) {
       sessionStorage.setItem("auth-token", json.authtoken);
       sessionStorage.setItem("name", userName);
+      // phone and email
       sessionStorage.setItem("phone", userPhone);
       sessionStorage.setItem("email", userEmail);
-      navigate("/"); // Redirect to home page after successful sign up
+      // Redirect to home page
+      navigate("/"); //on directing to home page you need to give logic to change login and signup buttons with name of the user and logout button where you have implemented Navbar functionality
       window.location.reload();
     } else {
       if (json.errors) {
@@ -83,38 +64,22 @@ export default function Signup() {
     }
   };
 
-  // Form Submit Handler
   const submitHandler = function (e) {
     e.preventDefault();
 
-    // Validate Name (minimum 4 characters)
-    if (userName.length < 4) {
-      setShowerr("Name should have at least 4 characters.");
-      return;
-    }
-
-    // Validate Email
     if (!validateEmail(userEmail)) {
       setShowerr("Please Enter a Valid Email");
       return;
     }
 
-    // Validate Phone Number (exactly 10 digits)
     if (!validatePhoneNumber(userPhone)) {
-      return; // If phone validation fails, we return here
-    }
-
-    // Validate Password (minimum length 8)
-    if (!validatePassword(userPassword)) {
-      setShowerr("Password should have at least 8 characters.");
+      setErrorNumber("Phone Number Should Be 10 Digits.");
       return;
     }
 
-    // Proceed to register
     register();
   };
 
-  // Reset Handler
   const resetHandler = function () {
     setName("");
     setEmail("");
@@ -140,6 +105,7 @@ export default function Signup() {
         </div>
         <div className="signup-form">
           <form method="POST" onSubmit={submitHandler}>
+
             <div className="signup-form-group">
               <label htmlFor="role">Role</label>
               <select
@@ -154,6 +120,7 @@ export default function Signup() {
                 <option value="Patient">Patient</option>
               </select>
             </div>
+
             <div className="signup-form-group">
               <label htmlFor="name">Name</label>
               <input
@@ -168,8 +135,8 @@ export default function Signup() {
                 placeholder="Enter your name"
                 aria-describedby="helpId"
               />
-              {showerr && <div className="err">{showerr}</div>}
             </div>
+
             <div className="signup-form-group">
               <label htmlFor="email">Email</label>
               <input
@@ -185,6 +152,7 @@ export default function Signup() {
               />
               {showerr && <div className="err">{showerr}</div>}
             </div>
+
             <div className="signup-form-group">
               <label htmlFor="phone">Phone</label>
               <input
@@ -202,6 +170,7 @@ export default function Signup() {
               />
               {errorNumber && <div className="err">{errorNumber}</div>}
             </div>
+            
             <div className="signup-form-group">
               <label htmlFor="password">Password</label>
               <div className="password-input-wrapper">
@@ -230,6 +199,7 @@ export default function Signup() {
                 </span>
               </div>
             </div>
+
             <div className="btn-subgroup">
               <button
                 type="submit"
@@ -238,6 +208,7 @@ export default function Signup() {
                 Sign Up
               </button>
             </div>
+            
             <div className="btn-subgroup">
               <button
                 type="reset"
@@ -247,6 +218,7 @@ export default function Signup() {
                 Reset
               </button>
             </div>
+
           </form>
         </div>
       </div>

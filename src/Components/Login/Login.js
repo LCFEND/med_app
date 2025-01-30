@@ -1,25 +1,17 @@
-import React, { useState, useEffect } from "react";  // Import useState and useEffect
-import { useNavigate, Link } from "react-router-dom"; // Import Link here along with useNavigate
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { API_URL } from "../../config";
 import "./Login.css";
 
-// Define API_URL (replace with actual URL or import it if defined elsewhere)
-const API_URL = "http://your-api-url.com"; // Replace this with your actual API URL
-
-const Login = () => {
-  const [password, setPassword] = useState(""); // State for password
-  const [showPassword, setShowPassword] = useState(false); // State for toggling password visibility
-  const [email, setEmail] = useState(""); // State for email
-  const [showerr, setShowerr] = useState(""); // State for error messages
+export default function Login() {
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [showerr, setShowerr] = useState("");
 
   const validateEmail = function (email) {
     const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-    
-    // Show an alert if the email is not valid
-    if (!emailPattern.test(email)) {
-      window.alert("Please enter a valid email address.");
-      return false;
-    }
-    return true;
+    return emailPattern.test(email);
   };
 
   const togglePasswordVisibility = function () {
@@ -30,9 +22,9 @@ const Login = () => {
 
   useEffect(() => {
     if (sessionStorage.getItem("auth-token")) {
-      navigate("/");
+      navigate("/"); // redirect to home if authenticated
     }
-  }, [navigate]);
+  }, [navigate]); // Add navigate as a dependency
 
   const login = async () => {
     const res = await fetch(`${API_URL}/api/auth/login`, {
@@ -47,11 +39,10 @@ const Login = () => {
     });
 
     const json = await res.json();
-    
     if (json.authtoken) {
       sessionStorage.setItem("auth-token", json.authtoken);
       sessionStorage.setItem("email", email);
-      navigate("/");
+      navigate("/"); // Redirect to home after successful login
       window.location.reload();
     } else {
       if (json.errors) {
@@ -59,30 +50,17 @@ const Login = () => {
           setShowerr(error.msg);
         }
       } else {
-        // Handle incorrect password or authentication error
-        if (json.error === "Invalid credentials") {
-          window.alert("Incorrect email or password. Please try again.");
-        } else {
-          setShowerr(json.error);
-        }
+        setShowerr(json.error);
       }
     }
   };
 
   const submitHandler = function (e) {
     e.preventDefault();
-
-    // Validate email
     if (!validateEmail(email)) {
-      return; // If email is invalid, stop the form submission
+      setShowerr("Please Enter a Valid Email");
+      return;
     }
-
-    // Password validation
-    if (!password) {
-      window.alert("Password cannot be empty");
-      return; // Stop submission if password is empty 
-    }
-
     login();
   };
 
@@ -150,7 +128,7 @@ const Login = () => {
                 Login
               </button>
             </div>
-
+            
             <div className="btn-subgroup">
               <button type="reset" className="btn btn-danger mb-2 waves-effect waves-light">
                 Reset
@@ -163,6 +141,4 @@ const Login = () => {
       </div>
     </div>
   );
-};
-
-export default Login;
+}

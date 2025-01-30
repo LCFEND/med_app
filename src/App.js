@@ -1,24 +1,26 @@
 import React, { useEffect } from 'react';
+import './App.css';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from './Components/Navbar/Navbar';
-import LandingPage from './Components/Landing_Page/LandingPage';  // Updated import
-import Login from './Components/Login/Login'; // Import the Login component
+import LandingPage from './Components/Landing_Page/LandingPage';  // Ensure this import is correct
+import Login from "./Components/Login/Login";
+import SignUp from "./Components/Sign_Up/Sign_Up";
 
 function App() {
   useEffect(() => {
-    // Code to run when the component mounts
     console.log('App component mounted');
-  }, []);  // Empty array ensures this only runs once after the initial render
+  }, []);  
 
   return (
     <div className="App">
-        <BrowserRouter>
-          <Navbar />
-          <Routes>
-            <Route path="/" element={<LandingPage />} />
-            <Route path="/login" element={<Login />} /> {/* Add a route for Login */}
-          </Routes>
-        </BrowserRouter>
+      <BrowserRouter>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<LandingPage />} />  {/* Corrected component name */}
+          <Route path="/Login" element={<Login />} />
+          <Route path="/SignUp" element={<SignUp />} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }

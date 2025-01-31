@@ -5,6 +5,7 @@ import Navbar from './Components/Navbar/Navbar';
 import LandingPage from './Components/Landing_Page/LandingPage';  // Ensure this import is correct
 import Login from "./Components/Login/Login";
 import SignUp from "./Components/Sign_Up/Sign_Up";
+import InstantConsultation from './Components/InstantConsultationBooking/InstantConsultation';
 
 function App() {
   useEffect(() => {
@@ -19,6 +20,7 @@ function App() {
           <Route path="/" element={<LandingPage />} />  {/* Corrected component name */}
           <Route path="/Login" element={<Login />} />
           <Route path="/SignUp" element={<SignUp />} />
+          <Route path="/InstantConsultation" element={<InstantConsultation/>} />
         </Routes>
       </BrowserRouter>
     </div>
